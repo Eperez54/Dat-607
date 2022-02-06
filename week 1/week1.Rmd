@@ -1,0 +1,81 @@
+---
+title: "607 Homework 1"
+author: "Eddie Perez"
+date: "February 5, 2022"
+output: html_document
+---
+
+# How much money does NYPD spend on its officers.
+As a city worker myself I always hear there is not enough money in the budget. Therfore I decided where the city of NY could save money and spend it on more important angency or public, like streets or even on homeless people.
+
+
+# Load Some libraries
+
+```{r}
+library (devtools)
+library (tidyverse)
+library(knitr)
+```
+
+# Import File from Github 
+
+```{r}
+file <- ("https://raw.githubusercontent.com/Eperez54/Dat-607/main/week%201/The%20Marshall%20Project%20-%20NYPD%20Claims%20Settled%20From%201.1.2010%20to%2012.31.2019.csv")
+
+
+data <- read.csv(file)
+data <- data.frame(data) %>% na.omit() # not counting N/A Values
+head (data)
+```
+
+# Get column headers 
+
+```{r}
+colnames(data)
+```
+## Columns name are understandble no need to rename them.
+I want to only see vehicle accidents where NYPD was involved
+```{r}
+VehicleAccident <- subset(data, data$Claim.Type == "AUTOMOBILE ACCIDENT")
+head (VehicleAccident)
+```
+# Bad Drivers?
+How much does NYPD cost the city with bad officer drivers
+first we have to change the dollar amount to numeric
+
+```{r}
+VehicleAccident$Settlement.Amount <- as.double(gsub('[$,]', '', VehicleAccident$Settlement.Amount))
+
+meancost = mean(VehicleAccident$Settlement.Amount)
+occurances = nrow(VehicleAccident)
+
+sprintf("The mean value of settlement is $%.2f", meancost)
+sprintf("The total amount of accidents is %.0f", occurances)
+sprintf("The highest dollar amount in Settlement is $%.2f", max(VehicleAccident$Settlement.Amount))
+```
+
+
+```{r}
+options(scipen=999) #  telling R to avoid all scientific notation by setting options
+#(data$Claim.Type)
+
+barplot(table(VehicleAccident$Occurrence.Borough), ylim=c(0,2000))
+
+```
+
+```{r}
+barplot(table(VehicleAccident$Occurrence.Borough),                     # Draw barplot with properly aligned legend
+        col = 1:nrow(table(VehicleAccident$Occurrence.Borough)),
+        legend.text = TRUE, 
+        args.legend = list(x = "topright",
+                           inset = c(- 0.15, 0)))
+
+```
+
+
+# Conclusion
+
+I believe that the NYPD could trim down this numbers. In a job where you spend more than 8 hours on the road the vehicle becomes your office. Furthermore I also believe that money spent in settlement could be better used in either training officers better driving skills to avoid accidents or invest in a program where officers who are repeat offenders would be mandated to go into training. If not then use on a different NYC agency.
+
+
+
