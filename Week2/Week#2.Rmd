@@ -3,6 +3,7 @@ title: "Week#2"
 author: "Eddie Perez"
 date: "2/13/2022"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -14,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(RMySQL)
 library(tidyverse)
+library(tinytex)
 ```
 
 ## DBMS Connection Using MySQL
