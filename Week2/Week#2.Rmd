@@ -1,0 +1,63 @@
+---
+title: "Week#2"
+author: "Eddie Perez"
+date: "2/13/2022"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#install.packages("RMySQL")#if you have it installed you can comment this line
+
+library(RMySQL)
+library(tidyverse)
+```
+
+## DBMS Connection Using MySQL
+
+
+```{r}
+# Setting things up
+
+db_user <- 'root'
+db_password <- 'elaine317'# I cannot remove password on MySQL
+db_name <- 'Reviews'
+db_host <- '127.0.0.1' # localhost for local access
+db_port <- 3306
+
+# Reading data from database
+
+mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
+                   dbname = db_name, host = db_host, port = db_port)
+
+selection <- paste0("SELECT m.*, r.UserName, r.MovieRating 
+	                     FROM Movie m 
+		                      INNER JOIN Rating r 
+			                      ON m.Id = r.MovieId;")
+
+recordset <- dbSendQuery(mydb, selection)
+dataf <-  fetch(recordset, n = -1) %>% na.omit() # not counting N/A Values if we had any
+dataf
+on.exit(dbDisconnect(mydb))
+```
+
+## Summary
+
+```{r df}
+summary(dataf)
+```
+
+## Some Plots
+
+```{r, echo=FALSE}
+f <- as.factor(dataf$Title)
+levels(f)
+plot(f, dataf$MovieRating, xlab="Name of the Movie", ylab="Movie Rating", legend.text = TRUE, 
+        args.legend = list(x = "topright",inset = c(- 0.15, 0)))
+```
+
+
+
