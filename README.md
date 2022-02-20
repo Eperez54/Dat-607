@@ -1,6 +1,7 @@
 # Dat-607
 Dat 607 CUNY SPS
 
-![](https://sps.cuny.edu/sites/all/themes/cuny/assets/img/cunysps_2021_2linelogo_spsblue_1.png)
+<p align="center">
+    <img width="200" src="https://sps.cuny.edu/sites/all/themes/cuny/assets/img/cunysps_2021_2linelogo_spsblue_1.png" alt="Spring 2022">
+</p>
 
-## Spring 2022
