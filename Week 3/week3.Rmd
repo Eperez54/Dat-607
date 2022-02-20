@@ -1,0 +1,113 @@
+---
+title: "HW#3"
+author: "Eddie Perez"
+date: "2/19/2022"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(stringr)
+```
+
+### #1. Using the 173 majors listed in fivethirtyeight.com’s College Majors dataset [https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/], provide code that identifies the majors that contain either "DATA" or "STATISTICS"
+
+### Loading the Data
+```{r Exercise #1}
+file <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/college-majors/majors-list.csv"
+major_list <- read.csv(file, TRUE, ",")
+head (major_list)
+```
+## Searching for Data and Statistics Majors 
+searching and storing majors from Data and Statistics
+
+```{r Majors}
+Data_Majors <- str_subset(major_list$Major,"DATA")
+Statistic_Majors <- str_subset(major_list$Major,"STATISTICS")
+
+print("Below you will find the Data major\n")
+Data_Majors
+
+print("\nBelow you will find the Statistic major\n")
+Statistic_Majors
+
+```
+
+
+### #2 Write code that transforms the data below:
+[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange"
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+[9] "elderberry"   "lime"         "lychee"       "mulberry"    
+[13] "olive"        "salal berry"
+Into a format like this:
+c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+The two exercises below are taken from R for Data Science, 14.3.5.1 in the on-line version:
+
+```{r Exercise #2}
+fruits <- '[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange"
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+[9] "elderberry"   "lime"         "lychee"       "mulberry"    
+[13] "olive"        "salal berry"'
+
+fruits <- str_extract_all(fruits,'[a-z]+\\s[a-z]+|[a-z]+')
+unlist(fruits)
+
+```
+
+
+### #3 Describe, in words, what these expressions will match:
+(.)\1\1 **This will look for the first Character that doesn't start on a new line and see if it repeats twice thereafter**
+
+"(.)(.)\\2\\1" **It will look at the first two letters of a word and see if something matches the inverse**
+
+(..)\1 **This would match character grouping for example a set of words that repeat, for example church the ch would be a good example**
+
+"(.).\\1.\\1" **a specific letter repeated once then another letter repeated once**
+
+"(.)(.)(.).*\\3\\2\\1" **This would match any 3 characters pair repeated 3times**
+
+
+
+### #4 Construct regular expressions to match words that:
+Start and end with the same character.
+Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)
+Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)
+
+```{r Exercise #4}
+# Setting up my data for following Exercise
+
+x <- c("eleven","banana","Mississippi","hello","today","yesterday","mom","dad")
+
+
+```
+
+
+#### Start and end with the same character.
+
+```{r Start and end}
+str_view(x, "^(.)(.*)\\1$")
+```
+
+
+#### Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)
+
+```{r repeated pair}
+
+str_view(x, "([A-Za-z][A-Za-z]).*\\1")
+
+```
+
+#### Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)
+
+```{r one repeated letter}
+
+str_view(x, "([A-Za-z]).*\\1.*\\1")
+
+```
+
