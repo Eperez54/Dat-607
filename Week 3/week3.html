@@ -240,20 +240,20 @@ x &lt;- c(&quot;eleven&quot;,&quot;banana&quot;,&quot;Mississippi&quot;,&quot;he
 <div id="start-and-end-with-the-same-character." class="section level4">
 <h4>Start and end with the same character.</h4>
 <pre class="r"><code>str_view(x, &quot;^(.)(.*)\\1$&quot;)</code></pre>
-<div id="htmlwidget-1117b3ab32255a311b4e" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1117b3ab32255a311b4e">{"x":{"html":"<ul>\n  <li>eleven<\/li>\n  <li>banana<\/li>\n  <li>Mississippi<\/li>\n  <li>hello<\/li>\n  <li>today<\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n  <li><span class='match'>mom<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b3510bec30822de2ae2d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b3510bec30822de2ae2d">{"x":{"html":"<ul>\n  <li>eleven<\/li>\n  <li>banana<\/li>\n  <li>Mississippi<\/li>\n  <li>hello<\/li>\n  <li>today<\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n  <li><span class='match'>mom<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="contain-a-repeated-pair-of-letters-e.g.-church-contains-ch-repeated-twice." class="section level4">
 <h4>Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)</h4>
 <pre class="r"><code>str_view(x, &quot;([A-Za-z][A-Za-z]).*\\1&quot;)</code></pre>
-<div id="htmlwidget-b04c176f72ce163eb9bb" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b04c176f72ce163eb9bb">{"x":{"html":"<ul>\n  <li>eleven<\/li>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li>M<span class='match'>issis<\/span>sippi<\/li>\n  <li>hello<\/li>\n  <li>today<\/li>\n  <li>yesterday<\/li>\n  <li>mom<\/li>\n  <li>dad<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d729452629549e6306d0" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d729452629549e6306d0">{"x":{"html":"<ul>\n  <li>eleven<\/li>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li>M<span class='match'>issis<\/span>sippi<\/li>\n  <li>hello<\/li>\n  <li>today<\/li>\n  <li>yesterday<\/li>\n  <li>mom<\/li>\n  <li>dad<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="contain-one-letter-repeated-in-at-least-three-places-e.g.-eleven-contains-three-es." class="section level4">
 <h4>Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)</h4>
 <pre class="r"><code>str_view(x, &quot;([A-Za-z]).*\\1.*\\1&quot;)</code></pre>
-<div id="htmlwidget-4cda1a76ea3561d279d8" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4cda1a76ea3561d279d8">{"x":{"html":"<ul>\n  <li><span class='match'>eleve<\/span>n<\/li>\n  <li>b<span class='match'>anana<\/span><\/li>\n  <li>M<span class='match'>ississippi<\/span><\/li>\n  <li>hello<\/li>\n  <li>today<\/li>\n  <li>yesterday<\/li>\n  <li>mom<\/li>\n  <li>dad<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ddc5dff552a076b29c6f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ddc5dff552a076b29c6f">{"x":{"html":"<ul>\n  <li><span class='match'>eleve<\/span>n<\/li>\n  <li>b<span class='match'>anana<\/span><\/li>\n  <li>M<span class='match'>ississippi<\/span><\/li>\n  <li>hello<\/li>\n  <li>today<\/li>\n  <li>yesterday<\/li>\n  <li>mom<\/li>\n  <li>dad<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
