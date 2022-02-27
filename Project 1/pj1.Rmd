@@ -3,9 +3,9 @@ title: "Project 1"
 author: "Eddie Perez"
 date: '2022-02-20'
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -102,4 +102,4 @@ write.csv(finalChessData,file = "chessData.csv")
 
 ## Conclusion
 
-This project was a bit tricky becuase I knew where I wanted to end up but getting there was hard. Thankfully I used some of string manipulation that we learned from last week lab which helped me. 
+This project was a bit tricky because I knew where I wanted to end up but getting there was hard. Thankfully I used some of string manipulation that we learned from last week lab which helped me get there. I wonder if it is possible to solve this without using string manipulation (Patterns)

@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/871551/16982985875a45619c9dad528f244203
+bundleId: https://api.rpubs.com/api/v1/document/871551/16982985875a45619c9dad528f244203
+url: http://rpubs.com/eperez162/871551
+when: 1646004952.47285
+lastSyncTime: 1646004952.47285
