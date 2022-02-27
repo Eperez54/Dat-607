@@ -1,0 +1,105 @@
+---
+title: "Project 1"
+author: "Eddie Perez"
+date: '2022-02-20'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Project #1
+In this project, you’re given a text file with chess tournament results where the information has some structure. Your job is to create an R Markdown file that generates a .CSV file (that could for example be imported into a SQL database) with the following information for all of the players:
+Player’s Name, Player’s State, Total Number of Points, Player’s Pre-Rating, and Average Pre Chess Rating of Opponents
+For the first player, the information would be:
+
+Gary Hua, ON, 6.0, 1794, 1605
+
+1605 was calculated by using the pre-tournament opponents’ ratings of 1436, 1563, 1600, 1610, 1649, 1663, 1716, and dividing by the total number of games played.
+
+```{r libraries}
+# setting proper libraries
+
+library(stringr)
+library(knitr)
+
+```
+
+## Importing the data.
+I used the read csv function to get my data and paste0 to concatenate because of the spaces on the chess file.
+
+```{r importing Data}
+# Assign my Chess Data file located on github so that I can use it with the Read table Function
+data = "https://raw.githubusercontent.com/Eperez54/Dat-607/main/Project%201/ChessData.txt"
+chessData <- read.csv(paste0(data), header = F)
+
+head(chessData)
+
+```
+## Cleaning up
+
+Removing unnecessary data the first four rows doesn't really contain information that we need I decided to truncate 
+```{r extracting data}
+#omitting the first four lines as they do not have valid data but keeping everything else
+
+chessData <- chessData[-c(1:4),]
+head(chessData)
+
+```
+
+## Separating Data
+
+I noticed that both rows could be separated and extracted 
+
+```{r}
+player <- chessData[seq(1, length(chessData), 3)]
+rating <- chessData[seq(2, length(chessData), 3)]
+
+head(player)
+head (rating)
+```
+
+Right now I will be separating based on information need for the new chessdata.csv file. Here the skills that I learned from last week's homework came into effect and it was very useful in separating and extracting data, based on patterns
+
+```{r}
+
+pairNumber <- as.integer(str_extract(player, "\\d+"))
+player_Name <- str_trim(str_extract(player, "(\\w+\\s){2,3}"))
+points <- as.numeric(str_extract(player, "\\d+\\.\\d+"))
+opponents <- str_extract_all(str_extract_all(player, "\\d+\\|"), "\\d+")
+draw <- str_count(player, "\\Q|D  \\E")
+lost <- str_count(player, "\\Q|L  \\E")
+Won <- str_count(player, "\\Q|W  \\E")
+
+state <- str_extract(rating, "\\w+")
+player_Rating <- as.integer(str_extract(str_extract(rating, "[^\\d]\\d{3,4}[^\\d]"), "\\d+"))
+
+```
+## Calculating average 
+
+
+```{r}
+opp_Rating <- length(player)
+for (i in 1:length(player))  
+  opp_Rating[i] <- round( mean ( player_Rating [as.numeric (unlist( opponents[ pairNumber[i]]))]), digits = 0) 
+
+```
+
+## Creating a new dataframe to hold my final chess data ready for export
+```{r}
+finalChessData <- data.frame(pairNumber, player_Name, state, points, player_Rating, opp_Rating, Won, lost, draw)
+head (finalChessData)
+```
+## Exporting to a csv file
+I use the write to csv file to export my chess data to file chessData.csv
+
+```{r}
+write.csv(finalChessData,file = "chessData.csv")
+```
+
+## Conclusion
+
+This project was a bit tricky becuase I knew where I wanted to end up but getting there was hard. Thankfully I used some of string manipulation that we learned from last week lab which helped me. 
