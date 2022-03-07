@@ -1,0 +1,93 @@
+---
+title: "week 5"
+author: "Eddie Perez"
+date: '2022-03-02'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Week #5 
+
+## Assignment – Tidying and Transforming Vaccination Data 
+
+(1) Create a .CSV file (or optionally, a relational database!) that includes all the information above. 
+You’re encouraged to use a “wide” structure similar to how the information appears above, so 
+that you can practice tidying and transformations as described below.
+(2) Read the information from your .CSV file into R, and use tidyr and dplyr as needed to tidy 
+and transform your data. 
+(3) Perform analysis as described in the spreadsheet and above.
+(4) Your code should be in an R Markdown file, posted to rpubs.com, and should include narrative 
+descriptions of your data cleanup work, analysis, and conclusions. Please include in your 
+homework submission:
+• The URL to the .Rmd file in your GitHub repository. and 
+• The URL for your rpubs.com web page.
+
+### Load Libraries
+```{r Load Library}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(stringr)
+```
+
+### Retrieving data file from github
+
+```{r Load file}
+vaccination_Data <- read_csv(file = "https://raw.githubusercontent.com/Eperez54/Dat-607/main/Week%205/israeli_vaccination_data_analysis_start.csv")
+vaccination_Data
+
+```
+
+```{r}
+vaccination_Data <- slice(vaccination_Data,1:5) #use only the first five rows
+head(vaccination_Data)
+```
+
+##  Separate data and renaming columns 
+here I noticed that row 3 and 5 have similar data and row 2 and 4 are alike I decided to join them to combine them later. Once I joined them I renamed them to match the name on the original csv file.
+```{r}
+Row1 <- slice(vaccination_Data, 3, 5)
+
+Row2 <- slice(vaccination_Data, 2, 4)
+
+Row1 <- rename(Row1, 'Not Vax %' = 'Population %', 'Fully Vax %' = '...3')
+Row2 <- rename(Row2, 'Population Not Vax' = 'Population %', 'Population Fully Vax' = '...3',
+               'Severe Cases Not Vax Per 100K' = 'Severe Cases', 'Severe Cases Fully Vax Per 100K' = '...5' )
+
+
+```
+
+
+```{r}
+vaxdf <- bind_cols(Row2, select(Row1, c("Not Vax %", "Fully Vax %")))
+vaxdf <- relocate(vaxdf, "Fully Vax %", .after = "Population Fully Vax")
+vaxdf <- relocate(vaxdf, "Not Vax %", .after = "Population Not Vax")
+vaxdf
+
+```
+
+# Answer some questions
+## Do you have enough information to calculate the total population? What does this total population represent?
+In the form we have the data we currently have enough information to answer this question. Assuming by guidelines from the CDC fully vaccinated must have both shots and inturn those who do not have both shots are not considered vaccinated.
+
+### Removing Percent symbols and Commas from data so that colmns will be numeric
+```{r}
+vaxdf$'Population Not Vax' <- as.numeric(str_remove_all(vaxdf$'Population Not Vax', ","))
+vaxdf$'Population Fully Vax' <- as.numeric(str_remove_all(vaxdf$'Population Fully Vax', ","))
+vaxdf$'Not Vax %' <- as.numeric(str_remove_all(vaxdf$'Not Vax %', "%"))
+vaxdf$'Fully Vax %' <- as.numeric(str_remove_all(vaxdf$'Fully Vax %', "%"))
+vaxdf$'Severe Cases Not Vax Per 100K' <- as.numeric(vaxdf$`Severe Cases Not Vax Per 100K`)
+vaxdf$'Severe Cases Fully Vax Per 100K' <- as.numeric(vaxdf$`Severe Cases Fully Vax Per 100K`)
+```
+
+
+here we use the summarise function to calculate the total of the population
+
+```{r}
+vaxdf <- mutate(vaxdf, 'Total Population' = vaxdf$'Population Not Vax' + vaxdf$'Population Fully Vax', .after = 'Age')
+summarise(vaxdf, 'Sum Total Population' = sum(vaxdf$'Total Population'))
+```
+
