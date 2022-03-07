@@ -60,20 +60,21 @@ Row2 <- rename(Row2, 'Population Not Vax' = 'Population %', 'Population Fully Va
 
 ```
 
-
+Here I arrange my data to look similar to the original file. I had use the relocate function from dplyr to move fully vax to go next to population fully vax and move the Not vax next to its rightful place.
 ```{r}
 vaxdf <- bind_cols(Row2, select(Row1, c("Not Vax %", "Fully Vax %")))
 vaxdf <- relocate(vaxdf, "Fully Vax %", .after = "Population Fully Vax")
 vaxdf <- relocate(vaxdf, "Not Vax %", .after = "Population Not Vax")
 vaxdf
-
+ 
 ```
 
 # Answer some questions
 ## Do you have enough information to calculate the total population? What does this total population represent?
-In the form we have the data we currently have enough information to answer this question. Assuming by guidelines from the CDC fully vaccinated must have both shots and inturn those who do not have both shots are not considered vaccinated.
+In the form we have the data we currently have enough information to answer this question. Assuming by guidelines from the CDC fully vaccinated must have both shots and in-turn those who do not have both shots are not considered vaccinated.
 
 ### Removing Percent symbols and Commas from data so that colmns will be numeric
+removing commas so that I can do arithmetic operations 
 ```{r}
 vaxdf$'Population Not Vax' <- as.numeric(str_remove_all(vaxdf$'Population Not Vax', ","))
 vaxdf$'Population Fully Vax' <- as.numeric(str_remove_all(vaxdf$'Population Fully Vax', ","))
@@ -84,12 +85,12 @@ vaxdf$'Severe Cases Fully Vax Per 100K' <- as.numeric(vaxdf$`Severe Cases Fully 
 ```
 
 
-here we use the summarise function to calculate the total of the population
+here we calculate the total of the population
 
 ```{r}
 vaxdf <- mutate(vaxdf, 'Total Population' = vaxdf$'Population Not Vax' + vaxdf$'Population Fully Vax', .after = 'Age')
 summarise(vaxdf, 'Sum Total Population' = sum(vaxdf$'Total Population'))
-population = summarise(vaxdf, 'Sum Total Population' = sum(vaxdf$'Total Population'))
+population = sum(vaxdf$'Total Population')
 
 print(paste0("Total Population is ", population))
 

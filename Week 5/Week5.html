@@ -460,6 +460,10 @@ Row2 &lt;- slice(vaccination_Data, 2, 4)
 Row1 &lt;- rename(Row1, &#39;Not Vax %&#39; = &#39;Population %&#39;, &#39;Fully Vax %&#39; = &#39;...3&#39;)
 Row2 &lt;- rename(Row2, &#39;Population Not Vax&#39; = &#39;Population %&#39;, &#39;Population Fully Vax&#39; = &#39;...3&#39;,
                &#39;Severe Cases Not Vax Per 100K&#39; = &#39;Severe Cases&#39;, &#39;Severe Cases Fully Vax Per 100K&#39; = &#39;...5&#39; )</code></pre>
+<p>Here I arrange my data to look similar to the original file. I had
+use the relocate function from dplyr to move fully vax to go next to
+population fully vax and move the Not vax next to its rightful
+place.</p>
 <pre class="r"><code>vaxdf &lt;- bind_cols(Row2, select(Row1, c(&quot;Not Vax %&quot;, &quot;Fully Vax %&quot;)))
 vaxdf &lt;- relocate(vaxdf, &quot;Fully Vax %&quot;, .after = &quot;Population Fully Vax&quot;)
 vaxdf &lt;- relocate(vaxdf, &quot;Not Vax %&quot;, .after = &quot;Population Not Vax&quot;)
@@ -479,26 +483,26 @@ vaxdf</code></pre>
 What does this total population represent?</h2>
 <p>In the form we have the data we currently have enough information to
 answer this question. Assuming by guidelines from the CDC fully
-vaccinated must have both shots and inturn those who do not have both
+vaccinated must have both shots and in-turn those who do not have both
 shots are not considered vaccinated.</p>
 <div id="removing-percent-symbols-and-commas-from-data-so-that-colmns-will-be-numeric" class="section level3">
 <h3>Removing Percent symbols and Commas from data so that colmns will be
 numeric</h3>
+<p>removing commas so that I can do arithmetic operations</p>
 <pre class="r"><code>vaxdf$&#39;Population Not Vax&#39; &lt;- as.numeric(str_remove_all(vaxdf$&#39;Population Not Vax&#39;, &quot;,&quot;))
 vaxdf$&#39;Population Fully Vax&#39; &lt;- as.numeric(str_remove_all(vaxdf$&#39;Population Fully Vax&#39;, &quot;,&quot;))
 vaxdf$&#39;Not Vax %&#39; &lt;- as.numeric(str_remove_all(vaxdf$&#39;Not Vax %&#39;, &quot;%&quot;))
 vaxdf$&#39;Fully Vax %&#39; &lt;- as.numeric(str_remove_all(vaxdf$&#39;Fully Vax %&#39;, &quot;%&quot;))
 vaxdf$&#39;Severe Cases Not Vax Per 100K&#39; &lt;- as.numeric(vaxdf$`Severe Cases Not Vax Per 100K`)
 vaxdf$&#39;Severe Cases Fully Vax Per 100K&#39; &lt;- as.numeric(vaxdf$`Severe Cases Fully Vax Per 100K`)</code></pre>
-<p>here we use the summarise function to calculate the total of the
-population</p>
+<p>here we calculate the total of the population</p>
 <pre class="r"><code>vaxdf &lt;- mutate(vaxdf, &#39;Total Population&#39; = vaxdf$&#39;Population Not Vax&#39; + vaxdf$&#39;Population Fully Vax&#39;, .after = &#39;Age&#39;)
 summarise(vaxdf, &#39;Sum Total Population&#39; = sum(vaxdf$&#39;Total Population&#39;))</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   `Sum Total Population`
 ##                    &lt;dbl&gt;
 ## 1                6937546</code></pre>
-<pre class="r"><code>population = summarise(vaxdf, &#39;Sum Total Population&#39; = sum(vaxdf$&#39;Total Population&#39;))
+<pre class="r"><code>population = sum(vaxdf$&#39;Total Population&#39;)
 
 print(paste0(&quot;Total Population is &quot;, population))</code></pre>
 <pre><code>## [1] &quot;Total Population is 6937546&quot;</code></pre>
