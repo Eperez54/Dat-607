@@ -498,6 +498,10 @@ summarise(vaxdf, &#39;Sum Total Population&#39; = sum(vaxdf$&#39;Total Populatio
 ##   `Sum Total Population`
 ##                    &lt;dbl&gt;
 ## 1                6937546</code></pre>
+<pre class="r"><code>population = summarise(vaxdf, &#39;Sum Total Population&#39; = sum(vaxdf$&#39;Total Population&#39;))
+
+print(paste0(&quot;Total Population is &quot;, population))</code></pre>
+<pre><code>## [1] &quot;Total Population is 6937546&quot;</code></pre>
 </div>
 </div>
 </div>

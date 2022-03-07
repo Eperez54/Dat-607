@@ -89,5 +89,9 @@ here we use the summarise function to calculate the total of the population
 ```{r}
 vaxdf <- mutate(vaxdf, 'Total Population' = vaxdf$'Population Not Vax' + vaxdf$'Population Fully Vax', .after = 'Age')
 summarise(vaxdf, 'Sum Total Population' = sum(vaxdf$'Total Population'))
+population = summarise(vaxdf, 'Sum Total Population' = sum(vaxdf$'Total Population'))
+
+print(paste0("Total Population is ", population))
+
 ```
 
