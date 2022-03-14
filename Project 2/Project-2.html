@@ -1750,6 +1750,129 @@ type, we see that water types have a higher HP for both their lowest and
 highest rated Pokemon compared to Grass type Pokemon.</p>
 </div>
 </div>
+<div id="dataset-2-lending-club-accepted-loans-from-2007---2018" class="section level1">
+<h1>Dataset 2: Lending Club Accepted Loans from 2007 - 2018</h1>
+<p><a href="https://www.kaggle.com/wordsforthewise/lending-club?select=accepted_2007_to_2018Q4.csv.gz" class="uri">https://www.kaggle.com/wordsforthewise/lending-club?select=accepted_2007_to_2018Q4.csv.gz</a></p>
+<p>Question: is there a direct relationship between these fields
+(interest rates, grade, loan amount and income)?</p>
+<pre class="r"><code>loan &lt;- read.csv(&quot;M:/607/archive/accepted2018Q4.csv&quot;)
+
+# summary(loan) too long </code></pre>
+<pre class="r"><code>colnames(loan)</code></pre>
+<pre><code>##   [1] &quot;id&quot;                             &quot;member_id&quot;                     
+##   [3] &quot;loan_amnt&quot;                      &quot;funded_amnt&quot;                   
+##   [5] &quot;funded_amnt_inv&quot;                &quot;term&quot;                          
+##   [7] &quot;int_rate&quot;                       &quot;installment&quot;                   
+##   [9] &quot;grade&quot;                          &quot;sub_grade&quot;                     
+##  [11] &quot;emp_title&quot;                      &quot;emp_length&quot;                    
+##  [13] &quot;home_ownership&quot;                 &quot;annual_inc&quot;                    
+##  [15] &quot;verification_status&quot;            &quot;issue_d&quot;                       
+##  [17] &quot;loan_status&quot;                    &quot;pymnt_plan&quot;                    
+##  [19] &quot;url&quot;                            &quot;desc&quot;                          
+##  [21] &quot;purpose&quot;                        &quot;title&quot;                         
+##  [23] &quot;zip_code&quot;                       &quot;addr_state&quot;                    
+##  [25] &quot;dti&quot;                            &quot;delinq_2yrs&quot;                   
+##  [27] &quot;earliest_cr_line&quot;               &quot;fico_range_low&quot;                
+##  [29] &quot;fico_range_high&quot;                &quot;inq_last_6mths&quot;                
+##  [31] &quot;mths_since_last_delinq&quot;         &quot;mths_since_last_record&quot;        
+##  [33] &quot;open_acc&quot;                       &quot;pub_rec&quot;                       
+##  [35] &quot;revol_bal&quot;                      &quot;revol_util&quot;                    
+##  [37] &quot;total_acc&quot;                      &quot;initial_list_status&quot;           
+##  [39] &quot;out_prncp&quot;                      &quot;out_prncp_inv&quot;                 
+##  [41] &quot;total_pymnt&quot;                    &quot;total_pymnt_inv&quot;               
+##  [43] &quot;total_rec_prncp&quot;                &quot;total_rec_int&quot;                 
+##  [45] &quot;total_rec_late_fee&quot;             &quot;recoveries&quot;                    
+##  [47] &quot;collection_recovery_fee&quot;        &quot;last_pymnt_d&quot;                  
+##  [49] &quot;last_pymnt_amnt&quot;                &quot;next_pymnt_d&quot;                  
+##  [51] &quot;last_credit_pull_d&quot;             &quot;last_fico_range_high&quot;          
+##  [53] &quot;last_fico_range_low&quot;            &quot;collections_12_mths_ex_med&quot;    
+##  [55] &quot;mths_since_last_major_derog&quot;    &quot;policy_code&quot;                   
+##  [57] &quot;application_type&quot;               &quot;annual_inc_joint&quot;              
+##  [59] &quot;dti_joint&quot;                      &quot;verification_status_joint&quot;     
+##  [61] &quot;acc_now_delinq&quot;                 &quot;tot_coll_amt&quot;                  
+##  [63] &quot;tot_cur_bal&quot;                    &quot;open_acc_6m&quot;                   
+##  [65] &quot;open_act_il&quot;                    &quot;open_il_12m&quot;                   
+##  [67] &quot;open_il_24m&quot;                    &quot;mths_since_rcnt_il&quot;            
+##  [69] &quot;total_bal_il&quot;                   &quot;il_util&quot;                       
+##  [71] &quot;open_rv_12m&quot;                    &quot;open_rv_24m&quot;                   
+##  [73] &quot;max_bal_bc&quot;                     &quot;all_util&quot;                      
+##  [75] &quot;total_rev_hi_lim&quot;               &quot;inq_fi&quot;                        
+##  [77] &quot;total_cu_tl&quot;                    &quot;inq_last_12m&quot;                  
+##  [79] &quot;acc_open_past_24mths&quot;           &quot;avg_cur_bal&quot;                   
+##  [81] &quot;bc_open_to_buy&quot;                 &quot;bc_util&quot;                       
+##  [83] &quot;chargeoff_within_12_mths&quot;       &quot;delinq_amnt&quot;                   
+##  [85] &quot;mo_sin_old_il_acct&quot;             &quot;mo_sin_old_rev_tl_op&quot;          
+##  [87] &quot;mo_sin_rcnt_rev_tl_op&quot;          &quot;mo_sin_rcnt_tl&quot;                
+##  [89] &quot;mort_acc&quot;                       &quot;mths_since_recent_bc&quot;          
+##  [91] &quot;mths_since_recent_bc_dlq&quot;       &quot;mths_since_recent_inq&quot;         
+##  [93] &quot;mths_since_recent_revol_delinq&quot; &quot;num_accts_ever_120_pd&quot;         
+##  [95] &quot;num_actv_bc_tl&quot;                 &quot;num_actv_rev_tl&quot;               
+##  [97] &quot;num_bc_sats&quot;                    &quot;num_bc_tl&quot;                     
+##  [99] &quot;num_il_tl&quot;                      &quot;num_op_rev_tl&quot;                 
+## [101] &quot;num_rev_accts&quot;                  &quot;num_rev_tl_bal_gt_0&quot;           
+## [103] &quot;num_sats&quot;                       &quot;num_tl_120dpd_2m&quot;              
+## [105] &quot;num_tl_30dpd&quot;                   &quot;num_tl_90g_dpd_24m&quot;            
+## [107] &quot;num_tl_op_past_12m&quot;             &quot;pct_tl_nvr_dlq&quot;                
+## [109] &quot;percent_bc_gt_75&quot;               &quot;pub_rec_bankruptcies&quot;          
+## [111] &quot;tax_liens&quot;                      &quot;tot_hi_cred_lim&quot;               
+## [113] &quot;total_bal_ex_mort&quot;              &quot;total_bc_limit&quot;                
+## [115] &quot;total_il_high_credit_limit&quot;     &quot;X&quot;                             
+## [117] &quot;X.1&quot;                            &quot;X.2&quot;</code></pre>
+<div id="selection-of-fields-i-need" class="section level2">
+<h2>Selection of fields I need</h2>
+<pre class="r"><code>loan &lt;- loan %&gt;% 
+    select(annual_inc, loan_amnt, int_rate, grade) 
+colnames(loan)</code></pre>
+<pre><code>## [1] &quot;annual_inc&quot; &quot;loan_amnt&quot;  &quot;int_rate&quot;   &quot;grade&quot;</code></pre>
+<pre class="r"><code>head(loan)</code></pre>
+<pre><code>##   annual_inc loan_amnt int_rate grade
+## 1      50000      5000    20.39     D
+## 2     196000     15000     9.92     B
+## 3      44000     11200    30.79     G
+## 4      65000     25000    21.85     D
+## 5      52000      3000     7.34     A
+## 6      52000     17000    20.39     D</code></pre>
+<p>It will be easier for me to create a field and categorize the loan,
+interest rates and the customer annual salary</p>
+<pre class="r"><code>#loan amount group
+loan$loangroup &lt;- findInterval(loan$loan_amnt, seq(0, 30000, 10000)) 
+loan$loangroup[loan$loangroup==1] &lt;- &quot;&lt;$10,000&quot;
+loan$loangroup[loan$loangroup==2] &lt;- &quot;&lt;$20,000&quot;
+loan$loangroup[loan$loangroup==3] &lt;- &quot;&lt;$30,000&quot;
+loan$loangroup[loan$loangroup==4] &lt;- &quot;&lt;=$40,000&quot;
+
+loan$loangroup &lt;- factor(loan$loangroup, levels=c(&quot;&lt;$10,000&quot;, &quot;&lt;$20,000&quot;, &quot;&lt;$30,000&quot;, &quot;&lt;=$40,000&quot;))
+
+#Loan interest rates group also know as APR
+loan$aprgroup&lt;- findInterval(loan$int_rate, seq(0, 30, 10))
+loan$aprgroup[loan$aprgroup==1] &lt;- &quot;0-10%&quot;
+loan$aprgroup[loan$aprgroup==2] &lt;- &quot;10-20%&quot;
+loan$aprgroup[loan$aprgroup==3] &lt;- &quot;20-30%&quot;
+loan$aprgroup[loan$aprgroup==4] &lt;- &quot;30-40%&quot;
+
+loan$aprgroup&lt;- factor(loan$aprgroup, levels=c(&quot;0-10%&quot;, &quot;10-20%&quot;, &quot;20-30%&quot;, &quot;30-40%&quot;))
+
+# Grouping customer annual salary by every $25k
+loan$salarygroup &lt;- findInterval(loan$annual_inc, seq(0, 100000, 25000))
+loan$salarygroup[loan$salarygroup==1] &lt;- &quot;&lt;$25,000&quot;
+loan$salarygroup[loan$salarygroup==2] &lt;- &quot;&lt;$50,000&quot;
+loan$salarygroup[loan$salarygroup==3] &lt;- &quot;&lt;$75,000&quot;
+loan$salarygroup[loan$salarygroup==4] &lt;- &quot;&lt;$100,000&quot;
+loan$salarygroup[loan$salarygroup==5] &lt;- &quot;&gt;=$100,000&quot;
+
+loan$salarygroup &lt;- factor(loan$salarygroup, levels=c(&quot;&lt;$25,000&quot;,&quot; &lt;$50,000&quot;, &quot;&lt;$75,000&quot;,
+                                                      &quot;&lt;$100,000&quot;, &quot;&gt;=$100,000&quot;))
+
+tail(loan)</code></pre>
+<pre><code>##        annual_inc loan_amnt int_rate grade loangroup aprgroup salarygroup
+## 236053      57000      5000    16.46     C  &lt;$10,000   10-20%    &lt;$75,000
+## 236054      53414     12000    14.03     C  &lt;$20,000   10-20%    &lt;$75,000
+## 236055      22000      5000     6.19     A  &lt;$10,000    0-10%    &lt;$25,000
+## 236056      80000     20000    15.49     C  &lt;$30,000   10-20%   &lt;$100,000
+## 236057      60000     10000    11.05     B  &lt;$20,000   10-20%    &lt;$75,000
+## 236058       9600      4000    16.46     C  &lt;$10,000   10-20%    &lt;$25,000</code></pre>
+</div>
+</div>
 
 
 

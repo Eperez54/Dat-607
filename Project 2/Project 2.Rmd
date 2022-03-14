@@ -108,3 +108,63 @@ plot
  
 When we compare the Pokemon that have the highest and lowest hit points from the Grass and Water types, we can see that Sukern has a lower hit point total than Feebas or Magikarp, which is the lowest hit point total for a Water type. Also, KyogrePrimal Kyogre has a higher HP than ShayminLand Forme and ShayminSky Forme (same number), who has the highest HP of all Grass type Pokemon. Consequently, when we compare the Pokemon with the highest and lowest HP between Water type and Grass type, we see that water types have a higher HP for both their lowest and highest rated Pokemon compared to Grass type Pokemon.
 
+# Dataset 2: Lending Club Accepted Loans from 2007 - 2018
+https://www.kaggle.com/wordsforthewise/lending-club?select=accepted_2007_to_2018Q4.csv.gz
+
+Question: is there a direct relationship between these fields (interest rates, grade, loan amount and income)?
+
+```{r}
+loan <- read.csv("M:/607/archive/accepted2018Q4.csv")
+
+# summary(loan) too long 
+
+```
+
+```{r}
+colnames(loan)
+```
+## Selection of fields I need
+
+```{r}
+loan <- loan %>% 
+    select(annual_inc, loan_amnt, int_rate, grade) 
+colnames(loan)
+head(loan)
+```
+It will be easier for me to create a field and categorize the loan, interest rates and the customer annual salary
+
+```{r}
+#loan amount group
+loan$loangroup <- findInterval(loan$loan_amnt, seq(0, 30000, 10000)) 
+loan$loangroup[loan$loangroup==1] <- "<$10,000"
+loan$loangroup[loan$loangroup==2] <- "<$20,000"
+loan$loangroup[loan$loangroup==3] <- "<$30,000"
+loan$loangroup[loan$loangroup==4] <- "<=$40,000"
+
+loan$loangroup <- factor(loan$loangroup, levels=c("<$10,000", "<$20,000", "<$30,000", "<=$40,000"))
+
+#Loan interest rates group also know as APR
+loan$aprgroup<- findInterval(loan$int_rate, seq(0, 30, 10))
+loan$aprgroup[loan$aprgroup==1] <- "0-10%"
+loan$aprgroup[loan$aprgroup==2] <- "10-20%"
+loan$aprgroup[loan$aprgroup==3] <- "20-30%"
+loan$aprgroup[loan$aprgroup==4] <- "30-40%"
+
+loan$aprgroup<- factor(loan$aprgroup, levels=c("0-10%", "10-20%", "20-30%", "30-40%"))
+
+# Grouping customer annual salary by every $25k
+loan$salarygroup <- findInterval(loan$annual_inc, seq(0, 100000, 25000))
+loan$salarygroup[loan$salarygroup==1] <- "<$25,000"
+loan$salarygroup[loan$salarygroup==2] <- "<$50,000"
+loan$salarygroup[loan$salarygroup==3] <- "<$75,000"
+loan$salarygroup[loan$salarygroup==4] <- "<$100,000"
+loan$salarygroup[loan$salarygroup==5] <- ">=$100,000"
+
+loan$salarygroup <- factor(loan$salarygroup, levels=c("<$25,000"," <$50,000", "<$75,000",
+                                                      "<$100,000", ">=$100,000"))
+
+tail(loan)
+
+```
+
+
