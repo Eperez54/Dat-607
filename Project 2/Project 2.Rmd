@@ -1,0 +1,75 @@
+---
+title: "Project2"
+author: "Eddie Perez"
+date: '2022-03-4'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Libraries Used in Project #2
+
+```{r, warning=FALSE, comment=FALSE, results=FALSE, message=FALSE}
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+
+
+```
+
+# Dataset #1 - Pokemon Dataset
+### Comparing two different types of pokemon 
+
+Found a useful pokemon dataset here -> https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv 
+
+I decided to work on this dataset because I recently started playing Pokemon Shield on my Nintendo Switch and am on a mission to capture all to fill my pokedex (a dictionary with useful pokemon stats). This cause my interest in search for such data since it is in the game it must be in the internet.
+
+### Reading the data from csv into R
+
+```{r}
+pokemon_data <- read.csv('https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv')
+
+head(pokemon_data, 25)
+```
+Some Pokemon were duplicated -- mostly those that were split into multiple Mega versions of themselves. To remove these, I wil use regular expression.
+
+
+```{r}
+
+pokemon_data <- pokemon_data %>% 
+  filter(!str_detect(Name, '\\Mega'))
+
+head(pokemon_data, 15)
+```
+By comparing both data frames we can indeed see that the mega Pokemon were removed
+
+For this comparison, it would be useful to select the columns that are relevant, and to group them by their type and total HP. In order to calculate maximum and minimum HP per Pokemon type, I used group by multiple times as well as mutate a few times.  
+
+
+```{r}
+
+lowandHighHp <- pokemon_data %>% 
+  select(X.,Name, Type.1, Total) %>% 
+    arrange(Type.1, Total) %>% 
+    group_by(Type.1) %>% 
+      mutate(High_HP = max(Total), Low_HP = min(Total)) %>% 
+    ungroup() %>% mutate(HP_Stats = (Total == High_HP) | (Total == Low_HP)) %>% 
+      filter(HP_Stats == TRUE) %>% 
+      mutate(HP_Stats = ifelse(Total == High_HP, 'High HP', 'Low HP')) %>%
+        select(X.,Name, Type.1, HP_Stats, Total) %>%
+          arrange(Total, desc(Total))%>%
+           rename("Pokemon #" = X., "Pokemon" = Name, "Type" = Type.1, "Total HP" = Total)
+
+highestHp <- lowandHighHp %>% filter(HP_Stats == 'High HP')
+
+lowestHp <- lowandHighHp %>% filter(HP_Stats == 'Low HP')
+
+highestHp
+lowestHp
+
+```
