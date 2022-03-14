@@ -457,9 +457,9 @@ renamed them to match the name on the original csv file.</p>
 
 Row2 &lt;- slice(vaccination_Data, 2, 4)
 
-Row1 &lt;- rename(Row1, &#39;Not Vax %&#39; = &#39;Population %&#39;, &#39;Fully Vax %&#39; = &#39;...3&#39;)
+Row1 &lt;- rename(Row1, &#39;Not Vax %&#39; = &#39;Population %&#39;, &#39;Fully Vax %&#39; = &#39;...3&#39;, &#39;Efficacy vs Severe Disease&#39; = &#39;Efficacy&#39;)
 Row2 &lt;- rename(Row2, &#39;Population Not Vax&#39; = &#39;Population %&#39;, &#39;Population Fully Vax&#39; = &#39;...3&#39;,
-               &#39;Severe Cases Not Vax Per 100K&#39; = &#39;Severe Cases&#39;, &#39;Severe Cases Fully Vax Per 100K&#39; = &#39;...5&#39; )</code></pre>
+               &#39;Severe Cases Not Vax Per 100K&#39; = &#39;Severe Cases&#39;, &#39;Severe Cases Fully Vax Per 100K&#39; = &#39;...5&#39;, &#39;Efficacy vs Severe Disease&#39; = &#39;Efficacy&#39; )</code></pre>
 <p>Here I arrange my data to look similar to the original file. I had
 use the relocate function from dplyr to move fully vax to go next to
 population fully vax and move the Not vax next to its rightful
@@ -474,7 +474,7 @@ vaxdf</code></pre>
 ## 1 &lt;50   1,116,834            23.3%       3,501,118              73.0%        
 ## 2 &gt;50   186,078              7.9%        2,133,516              90.4%        
 ## # ... with 3 more variables: `Severe Cases Not Vax Per 100K` &lt;chr&gt;,
-## #   `Severe Cases Fully Vax Per 100K` &lt;chr&gt;, Efficacy &lt;chr&gt;</code></pre>
+## #   `Severe Cases Fully Vax Per 100K` &lt;chr&gt;, `Efficacy vs Severe Disease` &lt;chr&gt;</code></pre>
 </div>
 <div id="answer-some-questions" class="section level1">
 <h1>Answer some questions</h1>
@@ -507,6 +507,70 @@ summarise(vaxdf, &#39;Sum Total Population&#39; = sum(vaxdf$&#39;Total Populatio
 print(paste0(&quot;Total Population is &quot;, population))</code></pre>
 <pre><code>## [1] &quot;Total Population is 6937546&quot;</code></pre>
 </div>
+</div>
+<div id="finding-out-the-efficacy-angainst-disease" class="section level2">
+<h2>Finding out the Efficacy angainst Disease</h2>
+<pre class="r"><code>vaxdf &lt;- mutate(vaxdf, &#39;Efficacy vs Severe Disease&#39; = 1 - ((vaxdf$&#39;Severe Cases Fully Vax Per 100K&#39; / vaxdf$`Population Fully Vax`) / (vaxdf$&#39;Severe Cases Fully Vax Per 100K&#39; / vaxdf$`Population Not Vax`)))
+vaxdf</code></pre>
+<pre><code>## # A tibble: 2 x 9
+##   Age   `Total Population` `Population Not Vax` `Not Vax %` `Population Fully ~`
+##   &lt;chr&gt;              &lt;dbl&gt;                &lt;dbl&gt;       &lt;dbl&gt;                &lt;dbl&gt;
+## 1 &lt;50              4617952              1116834        23.3              3501118
+## 2 &gt;50              2319594               186078         7.9              2133516
+## # ... with 4 more variables: `Fully Vax %` &lt;dbl&gt;,
+## #   `Severe Cases Not Vax Per 100K` &lt;dbl&gt;,
+## #   `Severe Cases Fully Vax Per 100K` &lt;dbl&gt;, `Efficacy vs Severe Disease` &lt;dbl&gt;</code></pre>
+<div id="calculate-the-efficacy-vs-disease" class="section level4">
+<h4>(2) Calculate the Efficacy vs Disease</h4>
+<p>By calculating the Efficacy I noticed that it is high among the Age
+&gt;50 Group compared to the over 50 group which is significantly
+lower.</p>
+</div>
+<div id="from-your-calculation-of-efficacy-vs.-disease-are-you-able-to-compare-the-rate-of-severe-cases-in-unvaccinated-individuals-to-that-in-vaccinated-individuals" class="section level3">
+<h3>(3) From your calculation of efficacy vs. disease, are you able to
+compare the rate of severe cases in unvaccinated individuals to that in
+vaccinated individuals?</h3>
+<p>The rate of severe cases can be calculated by dividing the efficacy
+by the disease rate, since the complement is also a factor.</p>
+<pre class="r"><code>vaxdf &lt;- mutate(vaxdf, &#39;Rate of Severe Cases Not Vax&#39; = vaxdf$`Severe Cases Not Vax Per 100K` / vaxdf$`Severe Cases Fully Vax Per 100K`)
+
+vaxdf &lt;- mutate(vaxdf, &#39;Rate of Severe Cases Fully Vax&#39; = 1 - vaxdf$&#39;Efficacy vs Severe Disease&#39;)
+
+vaxdf</code></pre>
+<pre><code>## # A tibble: 2 x 11
+##   Age   `Total Population` `Population Not Vax` `Not Vax %` `Population Fully ~`
+##   &lt;chr&gt;              &lt;dbl&gt;                &lt;dbl&gt;       &lt;dbl&gt;                &lt;dbl&gt;
+## 1 &lt;50              4617952              1116834        23.3              3501118
+## 2 &gt;50              2319594               186078         7.9              2133516
+## # ... with 6 more variables: `Fully Vax %` &lt;dbl&gt;,
+## #   `Severe Cases Not Vax Per 100K` &lt;dbl&gt;,
+## #   `Severe Cases Fully Vax Per 100K` &lt;dbl&gt;,
+## #   `Efficacy vs Severe Disease` &lt;dbl&gt;, `Rate of Severe Cases Not Vax` &lt;dbl&gt;,
+## #   `Rate of Severe Cases Fully Vax` &lt;dbl&gt;</code></pre>
+</div>
+<div id="comparing-the-rate-of-severe-cases-in-fully-vaccinanted-individuals-to-that-of-the-uncaccinated-individual" class="section level3">
+<h3>Comparing the Rate of severe cases in FUlly Vaccinanted individuals
+to that of the uncaccinated individual</h3>
+<pre class="r"><code>vaxdf &lt;- mutate(vaxdf, &#39;Ratio&#39; = vaxdf$&#39;Rate of Severe Cases Not Vax&#39; / vaxdf$&#39;Rate of Severe Cases Fully Vax&#39;)
+vaxdf</code></pre>
+<pre><code>## # A tibble: 2 x 12
+##   Age   `Total Population` `Population Not Vax` `Not Vax %` `Population Fully ~`
+##   &lt;chr&gt;              &lt;dbl&gt;                &lt;dbl&gt;       &lt;dbl&gt;                &lt;dbl&gt;
+## 1 &lt;50              4617952              1116834        23.3              3501118
+## 2 &gt;50              2319594               186078         7.9              2133516
+## # ... with 7 more variables: `Fully Vax %` &lt;dbl&gt;,
+## #   `Severe Cases Not Vax Per 100K` &lt;dbl&gt;,
+## #   `Severe Cases Fully Vax Per 100K` &lt;dbl&gt;,
+## #   `Efficacy vs Severe Disease` &lt;dbl&gt;, `Rate of Severe Cases Not Vax` &lt;dbl&gt;,
+## #   `Rate of Severe Cases Fully Vax` &lt;dbl&gt;, Ratio &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Individuals Age 50 and under who are unvaccinated have higher rate of
+severe cases than those individuals who are fully vaccinated. In
+unvaccinated individuals over 50, the rate of severe cases is higher
+than in fully vaccinated over 50 individuals.</p>
 </div>
 </div>
 

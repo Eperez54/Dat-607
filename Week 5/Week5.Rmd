@@ -53,9 +53,9 @@ Row1 <- slice(vaccination_Data, 3, 5)
 
 Row2 <- slice(vaccination_Data, 2, 4)
 
-Row1 <- rename(Row1, 'Not Vax %' = 'Population %', 'Fully Vax %' = '...3')
+Row1 <- rename(Row1, 'Not Vax %' = 'Population %', 'Fully Vax %' = '...3', 'Efficacy vs Severe Disease' = 'Efficacy')
 Row2 <- rename(Row2, 'Population Not Vax' = 'Population %', 'Population Fully Vax' = '...3',
-               'Severe Cases Not Vax Per 100K' = 'Severe Cases', 'Severe Cases Fully Vax Per 100K' = '...5' )
+               'Severe Cases Not Vax Per 100K' = 'Severe Cases', 'Severe Cases Fully Vax Per 100K' = '...5', 'Efficacy vs Severe Disease' = 'Efficacy' )
 
 
 ```
@@ -96,3 +96,36 @@ print(paste0("Total Population is ", population))
 
 ```
 
+## Finding out the Efficacy angainst Disease 
+
+```{r}
+vaxdf <- mutate(vaxdf, 'Efficacy vs Severe Disease' = 1 - ((vaxdf$'Severe Cases Fully Vax Per 100K' / vaxdf$`Population Fully Vax`) / (vaxdf$'Severe Cases Fully Vax Per 100K' / vaxdf$`Population Not Vax`)))
+vaxdf
+```
+
+#### (2) Calculate the Efficacy vs Disease 
+By calculating the Efficacy I noticed that it is high among the Age >50  Group compared to the over 50 group which is significantly lower.
+
+### (3) From your calculation of efficacy vs. disease, are you able to compare the rate of severe cases in unvaccinated individuals to that in vaccinated individuals?
+
+The rate of severe cases can be calculated by dividing the efficacy by the disease rate, since the complement is also a factor.
+
+```{r}
+
+vaxdf <- mutate(vaxdf, 'Rate of Severe Cases Not Vax' = vaxdf$`Severe Cases Not Vax Per 100K` / vaxdf$`Severe Cases Fully Vax Per 100K`)
+
+vaxdf <- mutate(vaxdf, 'Rate of Severe Cases Fully Vax' = 1 - vaxdf$'Efficacy vs Severe Disease')
+
+vaxdf
+```
+
+### Comparing the Rate of severe cases in FUlly Vaccinanted individuals to that of the uncaccinated individual
+
+```{r}
+vaxdf <- mutate(vaxdf, 'Ratio' = vaxdf$'Rate of Severe Cases Not Vax' / vaxdf$'Rate of Severe Cases Fully Vax')
+vaxdf
+```
+
+## Conclusion
+
+Individuals Age 50 and under who are unvaccinated have higher rate of severe cases than those individuals who are fully vaccinated. In unvaccinated individuals over 50, the rate of severe cases is higher than in fully vaccinated over 50 individuals.
