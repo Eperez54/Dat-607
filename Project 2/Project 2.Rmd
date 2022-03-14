@@ -65,8 +65,8 @@ lowandHighHp <- pokemon_data %>%
       filter(HP_Stats == TRUE) %>% 
       mutate(HP_Stats = ifelse(Total == High_HP, 'High HP', 'Low HP')) %>%
         select(X.,Name, Type.1, HP_Stats, Total) %>%
-          arrange(Total, desc(Total))%>%
-           rename("Pokemon #" = X., "Pokemon" = Name, "Type" = Type.1, "Total HP" = Total)
+          arrange(desc(Total)) %>%
+           rename("Pokemon #" = X.,  "Type" = Type.1, "Pokemon" = Name, "Total HP" = Total)
 
 highestHp <- lowandHighHp %>% filter(HP_Stats == 'High HP')
 
@@ -76,3 +76,35 @@ highestHp
 lowestHp
 
 ```
+
+
+### Printing the tables using shiny
+
+```{r}
+kable(highestHp, align = 'clc', caption = 'Pokemon w/ Highest HP in Group') %>%
+    kable_styling(bootstrap_options = c('striped'), full_width = F)
+
+kable(lowestHp, align = 'clc', caption = 'Pokemon w/ Lowest HP in Group') %>%
+    kable_styling(bootstrap_options = c('striped'), full_width = F)
+
+```
+
+Those Pokemon that have the highest HP for their group are evolved forms of less evolved Pokemon, as we can see from the list above. Similarly, Pokemon with the lowest HP for their group tend to be non evolved forms. The goal as a trainer in the game is to increase your Pokemon's hit points (HP), as well as evolve them to be more effective against other Pokemon you do this by doing battle with wild Pokemon or fighting against other trainers.For the purpose of answering this question, we will compare Water type Pokemon to Grass type Pokemon.
+
+```{r}
+
+filter_pokemon_type <- lowandHighHp %>% filter(Type == 'Grass' | Type == 'Water') %>% 
+      arrange(`Total HP`)
+
+plot <- ggplot(filter_pokemon_type, aes(x = Pokemon, y = `Total HP`, fill= HP_Stats))
+plot <- plot + scale_y_continuous()
+plot <- plot + theme(legend.position = "right")
+
+plot <- plot + geom_bar(stat = "identity", position = "stack", color="black")
+plot <- plot + facet_wrap(Type ~ ., scales = "free_x")
+plot
+``` 
+### Conclusion 
+ 
+When we compare the Pokemon that have the highest and lowest hit points from the Grass and Water types, we can see that Sukern has a lower hit point total than Feebas or Magikarp, which is the lowest hit point total for a Water type. Also, KyogrePrimal Kyogre has a higher HP than ShayminLand Forme and ShayminSky Forme (same number), who has the highest HP of all Grass type Pokemon. Consequently, when we compare the Pokemon with the highest and lowest HP between Water type and Grass type, we see that water types have a higher HP for both their lowest and highest rated Pokemon compared to Grass type Pokemon.
+
