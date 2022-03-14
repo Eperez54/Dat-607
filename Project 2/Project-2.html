@@ -12,7 +12,7 @@
 <meta name="author" content="Eddie Perez" />
 
 
-<title>Project2</title>
+<title>Project 2</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -358,7 +358,7 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Project2</h1>
+<h1 class="title toc-ignore">Project 2</h1>
 <h4 class="author">Eddie Perez</h4>
 <h4 class="date">2022-03-4</h4>
 
@@ -379,6 +379,7 @@ library(ggplot2)</code></pre>
 <div id="comparing-two-different-types-of-pokemon" class="section level3">
 <h3>Comparing two different types of pokemon</h3>
 <p>Found a useful pokemon dataset here -&gt; <a href="https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv" class="uri">https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv</a></p>
+<p>I will save this in my own github and use it from there.</p>
 <p>I decided to work on this dataset because I recently started playing
 Pokemon Shield on my Nintendo Switch and am on a mission to capture all
 to fill my pokedex (a dictionary with useful pokemon stats). This cause
@@ -387,8 +388,9 @@ in the internet.</p>
 </div>
 <div id="reading-the-data-from-csv-into-r" class="section level3">
 <h3>Reading the data from csv into R</h3>
-<pre class="r"><code>pokemon_data &lt;- read.csv(&#39;https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv&#39;)
+<pre class="r"><code>#pokemon_data &lt;- read.csv(&#39;https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv&#39;)
 
+pokemon_data &lt;- read.csv(&#39;https://raw.githubusercontent.com/Eperez54/Dat-607/main/Project%202/pokemon.csv&#39;)
 head(pokemon_data, 25)</code></pre>
 <pre><code>##    X.                      Name Type.1 Type.2 Total HP Attack Defense Sp..Atk
 ## 1   1                 Bulbasaur  Grass Poison   318 45     49      49      65

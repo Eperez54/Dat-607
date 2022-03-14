@@ -1,5 +1,5 @@
 ---
-title: "Project2"
+title: "Project 2"
 author: "Eddie Perez"
 date: '2022-03-4'
 output: html_document
@@ -27,13 +27,16 @@ library(ggplot2)
 
 Found a useful pokemon dataset here -> https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv 
 
+I will save this in my own github and use it from there.
+
 I decided to work on this dataset because I recently started playing Pokemon Shield on my Nintendo Switch and am on a mission to capture all to fill my pokedex (a dictionary with useful pokemon stats). This cause my interest in search for such data since it is in the game it must be in the internet.
 
 ### Reading the data from csv into R
 
 ```{r}
-pokemon_data <- read.csv('https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv')
+#pokemon_data <- read.csv('https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv')
 
+pokemon_data <- read.csv('https://raw.githubusercontent.com/Eperez54/Dat-607/main/Project%202/pokemon.csv')
 head(pokemon_data, 25)
 ```
 Some Pokemon were duplicated -- mostly those that were split into multiple Mega versions of themselves. To remove these, I wil use regular expression.
