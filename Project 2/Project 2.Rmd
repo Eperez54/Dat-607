@@ -108,13 +108,14 @@ plot
  
 When we compare the Pokemon that have the highest and lowest hit points from the Grass and Water types, we can see that Sukern has a lower hit point total than Feebas or Magikarp, which is the lowest hit point total for a Water type. Also, KyogrePrimal Kyogre has a higher HP than ShayminLand Forme and ShayminSky Forme (same number), who has the highest HP of all Grass type Pokemon. Consequently, when we compare the Pokemon with the highest and lowest HP between Water type and Grass type, we see that water types have a higher HP for both their lowest and highest rated Pokemon compared to Grass type Pokemon.
 
-# Dataset 2: Lending Club Accepted Loans from 2007 - 2018
+# Dataset 2: Lending Club Accepted Loans from 2018
 https://www.kaggle.com/wordsforthewise/lending-club?select=accepted_2007_to_2018Q4.csv.gz
+I deleted everything before 2018 as this list was extremely long the original can be found at the link above
 
 Question: is there a direct relationship between these fields (interest rates, grade, loan amount and income)?
 
 ```{r}
-loan <- read.csv("M:/607/archive/accepted2018Q4.csv")
+loan <- read.csv("https://raw.githubusercontent.com/Eperez54/Dat-607/main/Project%202/accepted2018Q4.csv")
 
 # summary(loan) too long 
 
@@ -167,4 +168,27 @@ tail(loan)
 
 ```
 
+```{r}
 
+ggplot(loan, aes(x=loan_amnt)) + 
+  geom_histogram(aes(fill=..count..)) + 
+  labs(title = "Loan distribution Amounts based on Grade") 
+  
+
+ggplot(loan, aes(x=factor(salarygroup), y=loan_amnt, fill=factor(salarygroup))) + 
+  geom_boxplot() + 
+  facet_grid(. ~ grade) + 
+  labs(title = "Boxplot for Loan based on Income, Grade, and Interest Rate", x="Income", y="Loan Amount") +
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+
+  
+
+ggplot(loan, aes(x=factor(loangroup), y=int_rate)) + 
+  geom_violin(alpha=0.6, color="red") +  
+  geom_jitter(alpha=0.5, aes(color=grade)) + 
+  facet_grid(. ~ loangroup) + 
+  labs(title = "Violin Plot for APR based on Loan Amount, Income, and Grade", x="Loan Amount", y="APR") +
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+I am able to visualize the relationships between variables by grouping them into categories.
