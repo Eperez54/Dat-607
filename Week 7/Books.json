@@ -1,0 +1,35 @@
+{"favoritebooks" :[
+	{
+	"title" : "C# 10 and .NET 6 – Modern Cross-Platform Development: Build apps, websites, and services with ASP.NET Core 6, Blazor, and EF Core 6 using Visual Studio 2022 and Visual Studio Code, 6th Edition 6th Edition, Kindle Edition",
+	"author" : "Mark J. Price",
+	"ISBN-13" : "978-1801077361",
+	"pages" : 824,
+	"binding" : "Ebook",
+	"amazonURL" : "https://www.amazon.com/10-NET-Cross-Platform-Development-websites-ebook-dp-B09JV37DM6/dp/B09JV37DM6/ref=mt_other?_encoding=UTF8&me=&qid=1647752051"
+	},
+	{
+	"title" : "Head First C#: A Learner's Guide to Real-World Programming with C# and .NET Core 4th Edition",
+	"author" : "Jennifer Greene",
+	"ISBN-13" : "978-1491976708",
+	"pages" : 800,
+	"binding" : "Paperback",
+	"amazonURL" : "https://www.amazon.com/Head-First-Learners-Real-World-Programming-dp-1491976705/dp/1491976705/ref=mt_other?_encoding=UTF8&me=&qid="
+	},
+	{
+	"title" : "R for Data Science: Import, Tidy, Transform, Visualize, and Model Data 1st Edition",
+	"author" : ["Hadley Wickham","Garrett Grolemund"],
+	"ISBN-13" : "978-1491910399",
+	"pages" : 520,
+	"binding" : "Paperback",
+	"amazonURL" : "https://www.amazon.com/Data-Science-Transform-Visualize-Model/dp/1491910399/ref=sr_1_1?crid=1ZKER249YHIJX&keywords=r+for+data+science&qid=1647752610&s=books&sprefix=R+%2Cstripbooks%2C45&sr=1-1"
+	},
+	{
+	"title" : "Intro to Python for Computer Science and Data Science: Learning to Program with AI, Big Data and The Cloud 1st Edition",
+	"author" : ["Paul J. Deitel", "Dr. Harvey M. Deitel"],
+	"ISBN-13" : "978-0135404676",
+	"pages" : 880,
+	"binding" : "Paperback",
+	"amazonURL" : "https://www.amazon.com/Intro-Python-Computer-Science-Data/dp/0135404673/ref=sr_1_9?crid=38FCK6SG4KJCM&keywords=python+for+data+science&qid=1647752945&s=books&sprefix=python+for+data+science%2Cstripbooks%2C42&sr=1-9"
+	}]
+}
+

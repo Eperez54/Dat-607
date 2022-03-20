@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<favoritebooks>
+
+	<book>
+		<BookTitle>C# 10 and .NET 6 – Modern Cross-Platform Development: Build apps, websites, and services with ASP.NET Core 6, Blazor, and EF Core 6 using Visual Studio 2022 and Visual Studio Code, 6th Edition 6th Edition, Kindle Edition</BookTitle>
+		<author>Mark J. Price</author>
+		<ISBN-13>978-1801077361</ISBN-13>
+		<pages>824</pages>
+		<binding>Ebook</binding>
+		
+	</book>
+
+	<book>
+		<BookTitle>Head First C#: A Learner's Guide to Real-World Programming with C# and .NET Core 4th Edition</BookTitle>
+		<author>Jennifer Greene</author>
+		<ISBN-13>978-1491976708</ISBN-13>
+		<pages>800</pages>
+		<binding>Paperback</binding>
+		
+	</book>
+	
+	<book>
+		<BookTitle>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data 1st Edition</BookTitle>
+		<author>Hadley Wickham, Garrett Grolemund</author>
+		<ISBN-13>978-1491910399</ISBN-13>
+		<pages>520</pages>
+		<binding>Paperback</binding>
+		
+	</book>
+
+	<book>
+		<BookTitle>Intro to Python for Computer Science and Data Science: Learning to Program with AI, Big Data and The Cloud 1st Edition</BookTitle>
+		<author>Paul J. Deitel, Dr. Harvey M. Deitel</author>
+		<ISBN-13>978-0135404676</ISBN-13>
+		<pages>880</pages>
+		<binding>Paperback</binding>
+		
+	</book>
+	
+</favoritebooks>
