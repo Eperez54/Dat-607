@@ -1,0 +1,70 @@
+---
+title: "Week 9"
+author: "Eddie Perez"
+date: '2022-04-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<h3>Fetching data from New York Times APIs</h3>
+
+The New York Times web site provides a rich set of APIs, as described [here](http://developer.nytimes.com/docs).
+
+1. Sign up for at least one API key  
+2. Choose an API to search and construct an interface in R to read in the JSON data   
+3. Transform the data into an R
+
+# Getting Proper Library if it's not install then install it
+```{r, warning=FALSE, message=FALSE}
+if (!require('stringr')) install.packages('stringr')
+if (!require('dplyr')) install.packages('dplyr')
+if (!require('jsonlite')) install.packages('jsonlite')
+```
+
+# Importing and Searching and Prepping Key
+
+Using the Top Stories API to look for stories in the Technology section of the NY Times.
+Setting up my key for importing articles.
+
+```{r}
+
+key <- "&api-key=Yrr0djuV78dAkxirOY3EwIkbXJbrXtDM" # API key
+
+
+```
+
+
+## Retrieve
+
+```{r}
+# add url and text required for api request
+url <- "https://api.nytimes.com/svc/topstories/v2/technology.json"
+url <- paste0(url, "?")
+# make api request using link provided by NY Times
+feed <- fromJSON(paste0(url, key))
+
+```
+
+
+# Setting up Data Frame with relevant article
+
+```{r}
+article <- feed$results
+
+article <- article %>% 
+    filter(section == "technology") %>% 
+    select(title, abstract, byline, published_date)
+
+
+```
+
+
+
+## Conclusion
+
+```{r}
+knitr::kable(article)
+```
